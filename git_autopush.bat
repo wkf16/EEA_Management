@@ -1,14 +1,19 @@
 @echo off
-for /F "tokens=1-3 delims=/" %%a in ('date /t') do (
+
+:: 获取当前日期和时间
+for /F "tokens=1-6 delims=/: " %%a in ('echo %date% %time%') do (
     set dd=%%a
     set mm=%%b
     set yyyy=%%c
+    set hh=%%d
+    set min=%%e
 )
-set "datestamp=%dd%/%mm%/%yyyy%"
+set "datetimestamp=%dd%/%mm%/%yyyy% %hh%:%min%"
 
 :: 进行git操作
 git add .
-git commit -m "update %datestamp%"
+git commit -m "update %datetimestamp%"
 git push
 
 echo Git操作完成: 已经添加、提交并推送了代码。
+
